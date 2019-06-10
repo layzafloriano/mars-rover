@@ -1,6 +1,6 @@
 // Rover Object Goes Here
 // ======================
-const roverS = {
+const roverData = {
   direction: 'N',
   x: 0,
   y: 0,
@@ -8,81 +8,102 @@ const roverS = {
 };
 
 // ======================
-function turnLeft(rover) {
-  // eslint-disable-next-line default-case
-  switch (rover.direction) {
+function turnLeft() {
+  switch (roverData.direction) {
     case 'N':
-      rover.direction = 'W';
+      roverData.direction = 'W';
       break;
     case 'S':
-      rover.direction = 'E';
+      roverData.direction = 'E';
       break;
     case 'E':
-      rover.direction = 'N';
+      roverData.direction = 'N';
       break;
     case 'W':
-      rover.direction = 'S'
+      roverData.direction = 'S';
+      break;
+    default:
       break;
   }
   /* console.log(rover.direction); */
 }
 
-function turnRight(rover) {
+function turnRight() {
   /*  console.log('turnRight was called!'); */
-  // eslint-disable-next-line default-case
-  switch (rover.direction) {
+  switch (roverData.direction) {
     case 'N':
-      rover.direction = 'E';
+      roverData.direction = 'E';
       break;
     case 'S':
-      rover.direction = 'W';
+      roverData.direction = 'W';
       break;
     case 'E':
-      rover.direction = 'S';
+      roverData.direction = 'S';
       break;
     case 'W':
-      rover.direction = 'N';
+      roverData.direction = 'N';
+      break;
+    default:
       break;
   }
   /* console.log(rover.direction); */
 }
 
-function moveForward(rover) {
-  // eslint-disable-next-line default-case
-  switch (rover.direction) {
+function moveForward() {
+  switch (roverData.direction) {
     case 'N':
-      y -= 1;
+      roverData.y -= 1;
       break;
     case 'S':
-      y -= 1;
+      roverData.y += 1;
       break;
     case 'E':
-      x += 1;
+      roverData.x += 1;
       break;
     case 'W':
-      x -= 1;
+      roverData.x -= 1;
+      break;
+    default:
       break;
   }
-  console.log(rover.x + rover.y);
+  /* console.log(roverData.x + roverData.y); */
+}
+
+function setTracking() {
+  roverData.travelLog.push({
+    x: roverData.x,
+    y: roverData.y,
+  });
+}
+
+function printTracking() {
+  console.log('TRACKING:');
+  for (let i = 0; i < roverData.travelLog.length; i += 1) {
+    console.log(`(${roverData.travelLog[i].x}, ${roverData.travelLog[i].y})`);
+  }
 }
 
 function commandsRover() {
   const command = prompt('Set the commands: ');
-  console.log(command);
+  console.log('command', command);
   for (let i = 0; i < command.length; i += 1) {
-    // eslint-disable-next-line default-case
     switch (command[i]) {
       case 'f':
-        moveForward(roverS);
+        moveForward();
         break;
       case 'l':
-        turnLeft(roverS);
+        turnLeft();
         break;
       case 'r':
-        turnRight(roverS);
+        turnRight();
+        break;
+      default:
         break;
     }
+    setTracking();
   }
+  printTracking();
 }
+
 
 commandsRover();
